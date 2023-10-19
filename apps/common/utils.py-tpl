@@ -1,0 +1,26 @@
+from typing import Any
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+from django.template.loader import get_template
+
+
+media_storage = FileSystemStorage(
+    location=settings.MEDIA_ROOT,
+    base_url=settings.MEDIA_URL
+)
+
+def image_preview(obj: Any, field_name: str):
+    """上传图片预览
+
+    Args:
+        obj (Any): 模型实例
+        field_name (str): 图片字段名
+
+    Returns:
+        HttpResponse: 渲染的页面
+    """
+    img_field = getattr(obj, field_name)
+    return get_template('image_preview.html').render({
+        'field_name': field_name,
+        'src': img_field.url if img_field else None
+    })

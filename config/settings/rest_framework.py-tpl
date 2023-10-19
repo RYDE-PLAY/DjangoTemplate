@@ -1,0 +1,17 @@
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'apps.api.exception_handlers.custom_exception_handler',  # Use custom exception handler
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.parsers.MultiPartParser',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # Authentication based on Json Web Token
+        'rest_framework.authentication.BasicAuthentication',  # Authentication based on username and password
+        'rest_framework.authentication.SessionAuthentication',  # Authentication based on session
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',  # Auto generate API documentation
+}

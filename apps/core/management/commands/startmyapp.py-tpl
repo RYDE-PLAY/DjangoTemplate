@@ -1,0 +1,24 @@
+import os
+
+from django.conf import settings
+from django.core.management.templates import TemplateCommand
+
+
+class Command(TemplateCommand):
+    help = (
+        "Creates a Django app directory structure for the given app name in "
+        "apps directory."
+    )
+    missing_args_message = "You must provide an application name."
+    rewrite_template_suffixes = (
+        # Allow shipping invalid .py files without byte-compilation.
+        (".py-tpl", ".py"),
+        (".py-atpl", ".py")
+    )
+
+    def handle(self, **options):
+        app_name = options.pop("name")
+        target = str(settings.BASE_DIR / f"apps/{app_name}")  # Create new app in apps directory
+        os.makedirs(target, exist_ok=True)
+        options["template"] = str(settings.BASE_DIR / "templates/django_app")  # Use custom template to create new app
+        super().handle("app", app_name, target, **options)

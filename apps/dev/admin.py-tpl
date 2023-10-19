@@ -1,0 +1,8 @@
+from django.contrib import admin
+from .models import UploadTemplate
+
+
+@admin.register(UploadTemplate)
+class UploadTemplateAdmin(admin.ModelAdmin):
+    list_display = ["content_type", "template"]
+    list_editable = ["template"]

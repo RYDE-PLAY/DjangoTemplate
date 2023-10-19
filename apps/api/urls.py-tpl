@@ -1,0 +1,6 @@
+from django.urls import include, path
+
+
+urlpatterns = [
+    # Append api urls here. Example: path('account/', include('apps.account.urls'))
+]
